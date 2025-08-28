@@ -6,6 +6,7 @@ import { Star } from "lucide-react";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import ProductItem from "../shared/ProductItem";
+import { IProduct } from "@/interface/products.interface";
 
 export default async function ProductSection() {
   const { data: products }: { data: IProduct[] } = await getProducts(8);
