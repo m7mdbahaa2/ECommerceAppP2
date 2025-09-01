@@ -18,6 +18,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import Link from "next/link";
+import { signOut, useSession } from "next-auth/react";
 
 const links = [
   {
@@ -39,6 +40,9 @@ const links = [
 ];
 
 const Navbar = () => {
+
+    const { data: session, status } = useSession()
+
   return (
     <section className="py-4">
       <div className="container mx-auto">
@@ -127,12 +131,18 @@ const Navbar = () => {
                   </Link> */}
                 </div>
                 <div className="mt-6 flex flex-col gap-4">
-                  <Button variant="outline" asChild>
+                  {status === "loading" ? <span>loading...</span>:(status==='unauthenticated'?<>                  <Button variant="outline" asChild>
                     <Link href="/signin">Sign in</Link>
                   </Button>
                   <Button asChild>
                     <Link href="/signup">Sign up</Link>
+                  </Button></>:
+                <>
+                <Button variant='outline' onClick={() => signOut({callbackUrl:"/login"})}>
+                    Sign Out
                   </Button>
+                  </>) }
+
                 </div>
               </div>
             </SheetContent>

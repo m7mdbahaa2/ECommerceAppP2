@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,21 +14,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
-const formSchema = z.object({
-  email: z.string().min(2, {
-    message: "email must be at least 2 characters.",
-  }),
-  password: z
-    .string()
-    .min(6, {
-      message: "Password must be at least 6 characters.",
-    })
-    .nonempty({ message: "password is required" }),
-});
+import { formSchema } from "@/schema/login.schema";
+import { LoginFormType } from "@/schema/login.schema";
+import { signIn, signin } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-  const form = useForm<z.infer<typeof formSchema>>({
+  const router = useRouter();
+  const form = useForm<LoginFormType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
@@ -37,11 +29,32 @@ export default function LoginPage() {
     },
   });
 
-  async function onSubmit(params: any) {
+  async function onSubmit(params: LoginFormType) {
+
     console.log("====================================");
     console.log(params);
     console.log("====================================");
+
+    try {
+      const res = await signIn("credentials", {
+        email: params.email,
+        password: params.password,
+        redirect: false,
+        // callBackUrl:'/',
+      });
+      console.log("res:", res);
+
+      if (res?.ok) {
+        router.push("/");
+        // e3ml toast hena w f el error
+      } else {
+        console.log(error);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
+
   return (
     <div className="max-w-2xl mx-auto mt-8">
       <Form {...form}>
