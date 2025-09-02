@@ -48,7 +48,7 @@ export default function LoginPage() {
         router.push("/");
         // e3ml toast hena w f el error
       } else {
-        console.log(Error);
+        console.log(res?.error);
       }
     } catch (error) {
       console.log(error);

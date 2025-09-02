@@ -1,5 +1,6 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { email } from "zod";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -11,7 +12,7 @@ export const authOptions: NextAuthOptions = {
       // e.g. domain, username, password, 2FA token, etc.
       // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {
-        Email: {
+        email: {
           label: "Email",
           type: "text",
           placeholder: "Enter your email",
@@ -30,7 +31,7 @@ export const authOptions: NextAuthOptions = {
             {
               method: "POST",
               body: JSON.stringify({
-                email: credentials?.Email,
+                email: credentials?.email,
                 password: credentials?.password,
               }),
               headers: {
