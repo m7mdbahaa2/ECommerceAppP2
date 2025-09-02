@@ -4,6 +4,7 @@ import { Star } from "lucide-react";
 import SectionTitle from "@/components/shared/SectionTitle";
 import { getProducts } from "@/services/products.service";
 import ProductItem from "@/components/shared/ProductItem";
+import { IProduct } from "@/interface/products.interface";
 
 export default async function ProductsPage() {
   const { data: products }: { data: IProduct[] } = await getProducts();
