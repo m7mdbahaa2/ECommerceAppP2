@@ -16,7 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { formSchema } from "@/schema/login.schema";
 import { LoginFormType } from "@/schema/login.schema";
-import { signIn, signin } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
@@ -48,7 +48,7 @@ export default function LoginPage() {
         router.push("/");
         // e3ml toast hena w f el error
       } else {
-        console.log(error);
+        console.log(Error);
       }
     } catch (error) {
       console.log(error);
